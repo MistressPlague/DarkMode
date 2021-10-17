@@ -51,7 +51,14 @@ namespace DarkMode
                     }
                     else if (obj.GetComponent<Slider>() || obj.GetComponentInChildren<Slider>(true) || (obj.transform.parent != null && obj.transform.parent.GetComponent<Slider>()))
                     {
-                        obj.color = new Color(obj.color.r / 1.5f, obj.color.g / 1.5f, obj.color.b / 1.5f, obj.color.a);
+                        if (obj.gameObject.name == "Fill")
+                        {
+                            obj.color = new Color(obj.color.r / 1.15f, obj.color.g / 1.15f, obj.color.b / 1.15f, obj.color.a);
+                        }
+                        else
+                        {
+                            obj.color = new Color(obj.color.r / 1.5f, obj.color.g / 1.5f, obj.color.b / 1.5f, obj.color.a);
+                        }
                     }
                     else
                     {
