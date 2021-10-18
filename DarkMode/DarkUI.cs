@@ -35,7 +35,7 @@ namespace DarkMode
 
             MelonLogger.Warning("Grabbing Images..");
             var ObjsWithColorsToInvert = Resources.FindObjectsOfTypeAll<Image>().Where(o => o != null).ToList();
-            MelonLogger.Warning($"Darkening {ObjsWithColorsToInvert.Count} Colours..");
+            MelonLogger.Warning($"Darkening {ObjsWithColorsToInvert.Count} Image Colours..");
 
             foreach (var obj in ObjsWithColorsToInvert)
             {
@@ -58,7 +58,7 @@ namespace DarkMode
                         obj.color = new Color(obj.color.r / 2f, obj.color.g / 2f, obj.color.b / 2f, obj.color.a);
                     }
 
-                    MelonLogger.Warning($"Darkened: {obj.gameObject.name} To {obj.color.r}, {obj.color.g}, {obj.color.b}!");
+                    //MelonLogger.Warning($"Darkened: {obj.gameObject.name} To {obj.color.r}, {obj.color.g}, {obj.color.b}!");
                 }
                 catch
                 {
