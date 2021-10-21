@@ -183,33 +183,40 @@ namespace DarkMode
 
                         OldColours[PathToObj] = (new Color(obj.color.r, obj.color.g, obj.color.b, obj.color.a), ((Comps.ToComponentList<Button>() is var buttons && buttons.Count > 0) ? buttons.First()?.colors : null));
 
-                        if (Comps.ToComponentList<Toggle>() is var ToggleComps && (ToggleComps.Count > 0 || PathToObj.Contains("toggle")))
+                        if (!obj.name.ToLower().Contains("panel"))
                         {
-                            obj.color = (PathToObj.Contains("off") || LowerCaseName.Contains("check")) ? new Color(ToggleRed, ToggleGreen, ToggleBlue, obj.color.a) : new Color(Mathf.Clamp(ToggleRed + 0.20f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.20f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.20f, 0f, 1f), obj.color.a);
-                        }
-                        else if (Comps.ToComponentList<Button>() is var ButtonComps && (ButtonComps.Count > 0 || PathToObj.Contains("button")))
-                        {
-                            if (ButtonComps.Count > 0 && ButtonComps.First().colors != null)
+                            if (Comps.ToComponentList<Toggle>() is var ToggleComps && (ToggleComps.Count > 0 || PathToObj.Contains("toggle")))
                             {
-                                ButtonComps.First().colors = new ColorBlock
-                                {
-                                    colorMultiplier = 1f,
-
-                                    normalColor = new Color(ToggleRed, ToggleGreen, ToggleBlue, obj.color.a),
-                                    highlightedColor = new Color(Mathf.Clamp(ToggleRed + 0.05f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.05f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.05f, 0f, 1f), obj.color.a),
-                                    pressedColor = new Color(ToggleRed, ToggleGreen, ToggleBlue, obj.color.a),
-                                    selectedColor = new Color(Mathf.Clamp(ToggleRed + 0.10f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.10f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.10f, 0f, 1f), obj.color.a),
-
-                                    disabledColor = new Color(Mathf.Clamp(ToggleRed + 0.30f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.30f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.30f, 0f, 1f), obj.color.a)
-                                };
+                                obj.color = (PathToObj.Contains("off") || LowerCaseName.Contains("check")) ? new Color(ToggleRed, ToggleGreen, ToggleBlue, obj.color.a) : new Color(Mathf.Clamp(ToggleRed + 0.20f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.20f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.20f, 0f, 1f), obj.color.a);
                             }
+                            else if (Comps.ToComponentList<Button>() is var ButtonComps && (ButtonComps.Count > 0 || PathToObj.Contains("button")))
+                            {
+                                if (ButtonComps.Count > 0 && ButtonComps.First().colors != null)
+                                {
+                                    ButtonComps.First().colors = new ColorBlock
+                                    {
+                                        colorMultiplier = 1f,
 
-                            obj.color = new Color(ButtonRed, ButtonGreen, ButtonBlue, obj.color.a);
+                                        normalColor = new Color(ToggleRed, ToggleGreen, ToggleBlue, obj.color.a),
+                                        highlightedColor = new Color(Mathf.Clamp(ToggleRed + 0.05f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.05f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.05f, 0f, 1f), obj.color.a),
+                                        pressedColor = new Color(ToggleRed, ToggleGreen, ToggleBlue, obj.color.a),
+                                        selectedColor = new Color(Mathf.Clamp(ToggleRed + 0.10f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.10f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.10f, 0f, 1f), obj.color.a),
 
-                        }
-                        else if (Comps.ToComponentList<Slider>() is var SliderComps && (SliderComps.Count > 0 || PathToObj.Contains("slider")))
-                        {
-                            obj.color = PathToObj.Contains("fill") ? new Color(Mathf.Clamp(SliderRed + 0.20f, 0f, 1f), Mathf.Clamp(SliderGreen + 0.20f, 0f, 1f), Mathf.Clamp(SliderBlue + 0.20f, 0f, 1f), obj.color.a) : new Color(SliderRed, SliderGreen, SliderBlue, obj.color.a);
+                                        disabledColor = new Color(Mathf.Clamp(ToggleRed + 0.30f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.30f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.30f, 0f, 1f), obj.color.a)
+                                    };
+                                }
+
+                                obj.color = new Color(ButtonRed, ButtonGreen, ButtonBlue, obj.color.a);
+
+                            }
+                            else if (Comps.ToComponentList<Slider>() is var SliderComps && (SliderComps.Count > 0 || PathToObj.Contains("slider")))
+                            {
+                                obj.color = PathToObj.Contains("fill") ? new Color(Mathf.Clamp(SliderRed + 0.20f, 0f, 1f), Mathf.Clamp(SliderGreen + 0.20f, 0f, 1f), Mathf.Clamp(SliderBlue + 0.20f, 0f, 1f), obj.color.a) : new Color(SliderRed, SliderGreen, SliderBlue, obj.color.a);
+                            }
+                            else
+                            {
+                                obj.color = new Color(MiscRed, MiscGreen, MiscBlue, obj.color.a);
+                            }
                         }
                         else
                         {
