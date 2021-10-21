@@ -135,6 +135,17 @@ namespace DarkMode
             var SkyBox = GameObject.Find("UserInterface/MenuContent/Popups/LoadingPopup/3DElements/LoadingBackground_TealGradient/SkyCube_Baked")?.GetComponent<MeshRenderer>()?.material;
             var InitialSkyBox = GameObject.Find("LoadingBackground_TealGradient_Music/SkyCube_Baked")?.GetComponent<MeshRenderer>()?.material;
 
+            //Reflection Probe
+            GameObject.Find("UserInterface/MenuContent/Popups/LoadingPopup/3DElements/LoadingBackground_TealGradient/_Lighting (1)/Reflection Probe")?.SetActive(!Enabled);
+
+            //Point Light
+            var LoadingScreenLighting = GameObject.Find("UserInterface/MenuContent/Popups/LoadingPopup/3DElements/LoadingBackground_TealGradient/_Lighting (1)/Point light");
+
+            if (LoadingScreenLighting != null)
+            {
+                LoadingScreenLighting.GetComponent<Light>().intensity = Enabled ? 5f : 15.7f;
+            }
+
             if (Enabled)
             {
                 if (SkyBox != null)
