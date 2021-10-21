@@ -24,9 +24,9 @@ namespace DarkMode
             Category.CreateEntry("ToggleGreen", 0.25f, "Toggle Green", false);
             Category.CreateEntry("ToggleBlue", 0.25f, "Toggle Blue", false);
 
-            Category.CreateEntry("ButtonRed", 0.35f, "Button Red", false);
-            Category.CreateEntry("ButtonGreen", 0.35f, "Button Green", false);
-            Category.CreateEntry("ButtonBlue", 0.35f, "Button Blue", false);
+            Category.CreateEntry("ButtonRed", 0.75f, "Button Red", false);
+            Category.CreateEntry("ButtonGreen", 0.75f, "Button Green", false);
+            Category.CreateEntry("ButtonBlue", 0.75f, "Button Blue", false);
 
             Category.CreateEntry("SliderRed", 0.15f, "Slider Red", false);
             Category.CreateEntry("SliderGreen", 0.15f, "Slider Green", false);
@@ -45,9 +45,9 @@ namespace DarkMode
         private float ToggleGreen = 0.15f;
         private float ToggleBlue = 0.15f;
 
-        private float ButtonRed = 0.25f;
-        private float ButtonGreen = 0.25f;
-        private float ButtonBlue = 0.25f;
+        private float ButtonRed = 0.75f;
+        private float ButtonGreen = 0.75f;
+        private float ButtonBlue = 0.75f;
 
         private float SliderRed = 0.25f;
         private float SliderGreen = 0.25f;
@@ -132,6 +132,7 @@ namespace DarkMode
 
             MelonLogger.Warning($"{(Enabled ? "Darkening" : "Reverting")} {ObjsWithColorsToInvert.Count} Image Colours..");
 
+            //VRChat Specific, Doesn't Effect The Mod Being Universal Due To Only Using Unity Methods And Null Propagation.
             var SkyBox = GameObject.Find("UserInterface/MenuContent/Popups/LoadingPopup/3DElements/LoadingBackground_TealGradient/SkyCube_Baked")?.GetComponent<MeshRenderer>()?.material;
             var InitialSkyBox = GameObject.Find("LoadingBackground_TealGradient_Music/SkyCube_Baked")?.GetComponent<MeshRenderer>()?.material;
 
@@ -188,9 +189,7 @@ namespace DarkMode
                         }
                         else if (Comps.ToComponentList<Button>() is var ButtonComps && (ButtonComps.Count > 0 || PathToObj.Contains("button")))
                         {
-                            obj.color = new Color(ButtonRed, ButtonGreen, ButtonBlue, obj.color.a);
-
-                            if (ButtonComps.Count > 0)
+                            if (ButtonComps.Count > 0 && ButtonComps.First().colors != null)
                             {
                                 ButtonComps.First().colors = new ColorBlock
                                 {
@@ -204,6 +203,9 @@ namespace DarkMode
                                     disabledColor = new Color(Mathf.Clamp(ToggleRed + 0.30f, 0f, 1f), Mathf.Clamp(ToggleGreen + 0.30f, 0f, 1f), Mathf.Clamp(ToggleBlue + 0.30f, 0f, 1f), obj.color.a)
                                 };
                             }
+
+                            obj.color = new Color(ButtonRed, ButtonGreen, ButtonBlue, obj.color.a);
+
                         }
                         else if (Comps.ToComponentList<Slider>() is var SliderComps && (SliderComps.Count > 0 || PathToObj.Contains("slider")))
                         {
