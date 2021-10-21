@@ -108,6 +108,11 @@ namespace DarkMode
         private bool HasDarkened = false;
         internal IEnumerator OnUILoaded()
         {
+            if (Enabled && !HasDarkened)
+            {
+                ColourSkyBox();
+            }
+
             yield return new WaitForSeconds(10f);
 
             if (Enabled)
@@ -124,14 +129,8 @@ namespace DarkMode
         private Color? SkyBoxColour = null;
         private Color? InitialSkyBoxColour = null;
 
-        private void ColourUI()
+        private void ColourSkyBox()
         {
-            MelonLogger.Warning("Grabbing Images..");
-
-            var ObjsWithColorsToInvert = Resources.FindObjectsOfTypeAll<Image>().Where(o => o != null).ToList();
-
-            MelonLogger.Warning($"{(Enabled ? "Darkening" : "Reverting")} {ObjsWithColorsToInvert.Count} Image Colours..");
-
             //VRChat Specific, Doesn't Effect The Mod Being Universal Due To Only Using Unity Methods And Null Propagation.
             var SkyBox = GameObject.Find("UserInterface/MenuContent/Popups/LoadingPopup/3DElements/LoadingBackground_TealGradient/SkyCube_Baked")?.GetComponent<MeshRenderer>()?.material;
             var InitialSkyBox = GameObject.Find("LoadingBackground_TealGradient_Music/SkyCube_Baked")?.GetComponent<MeshRenderer>()?.material;
@@ -163,6 +162,20 @@ namespace DarkMode
                 {
                     InitialSkyBox.SetColor("_Tint", (Color)InitialSkyBoxColour);
                 }
+            }
+        }
+
+        private void ColourUI()
+        {
+            MelonLogger.Warning("Grabbing Images..");
+
+            var ObjsWithColorsToInvert = Resources.FindObjectsOfTypeAll<Image>().Where(o => o != null).ToList();
+
+            MelonLogger.Warning($"{(Enabled ? "Darkening" : "Reverting")} {ObjsWithColorsToInvert.Count} Image Colours..");
+
+            if (HasDarkened)
+            {
+                ColourSkyBox();
             }
 
             foreach (var obj in ObjsWithColorsToInvert)
